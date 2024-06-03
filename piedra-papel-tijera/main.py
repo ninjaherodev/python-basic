@@ -7,7 +7,7 @@ def obtener_eleccion_usuario():
     return eleccion
 
 def obtener_eleccion_computadora():
-    opciones = ["piedra", "papel", "tijera"]
+    opciones = ("piedra", "papel", "tijera")
     return random.choice(opciones)
 
 def determinar_ganador(usuario, computadora):
