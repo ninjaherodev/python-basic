@@ -1,5 +1,5 @@
 import random
-
+from colorama import init, Fore, Back, Style # type: ignore
 opciones = ('piedra', 'papel', 'tijera')
 opciones_texto = ', '.join(opciones).title()
 
@@ -15,16 +15,16 @@ def cpuOption() -> str:
     return random.choice(opciones)
 
 
-def win(opcUser, opcCpu) -> str:
+def findWinner(opcUser, opcCpu) -> str:
    if opcUser == opcCpu :
-      return "!Empate"
+      return "empate"
    elif ((opcUser == 'piedra' and opcCpu=='tijera') or 
          (opcUser == 'papel'  and opcCpu=='piedra') or
          (opcUser == 'tijera' and opcCpu=='papel')
          ):
-       return 'Ganaste!'
+       return "usuario"
    else: 
-      return 'Perdiste!'
+      return "computador"
    
 def playAgain() -> bool:
    response = input('¿Quieres jugar otra vez? (s/n):').lower()
@@ -34,15 +34,42 @@ def playAgain() -> bool:
    return response == "s" 
    
 def game():
-   print("¡Bienvenido al juego de Piedra, Papel o Tijera!")
+   print("¡Bienvenido al juego de Piedra, Papel o Tijera!\n")
+   rondas = 3
+   user_win = 0
+   cpu_win = 0
+   rondas_jugadas = 0
+
    while True:
+    print(f"Ronda [{rondas_jugadas + 1}] de [{rondas}]")
+    print(f"*****************\n")
     usuario = userOption()
     computadora = cpuOption()
     print(f"Computadora eligió: {computadora}")
-    resultado = win(usuario, computadora)
-    print(resultado)
-    if not playAgain():
+    resultado = findWinner(usuario, computadora)
+    if resultado == "usuario":
+       user_win += 1
+       print(Fore.GREEN + 'Ganaste!'+ Style.RESET_ALL)
+    elif resultado == "computador":
+       cpu_win+=1
+       print(Fore.RED+'Perdiste!'+ Style.RESET_ALL)
+    else:
+       print(resultado)   
+
+    rondas_jugadas += 1
+    print(f"Marcador => cpu: {cpu_win} user: {user_win}\n" )
+    
+    if rondas_jugadas>= rondas:
         print("¡Gracias por jugar!")
+        print(f"Rondas jugadas: {rondas_jugadas}")
+        print(f"Victorias del usuario: {user_win}")
+        print(f"Victorias de la computadora: {cpu_win}")
+        if user_win > cpu_win:
+           print("¡El usuario es el ganador final!")
+        elif user_win < cpu_win:
+           print("¡La computadora es la ganadora final!")
+        else:
+           print("¡Es un empate final!")
         break
 
 

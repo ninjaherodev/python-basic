@@ -6,6 +6,10 @@
 sudo add-apt-repository ppa:deadsnakes/ppa
 sudo apt update
 sudo apt install python3.12
+sudo apt install python3-pip
+sudo apt install python3-distutils
+sudo apt install python3-apt
+sudo apt install python3.12-distutils
 ```
 
 ## Versiones Instaladas
